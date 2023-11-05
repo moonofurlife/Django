@@ -24,6 +24,7 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         model = Advertisement
         fields = ('id', 'title', 'description', 'creator',
                   'status', 'created_at', )
+        read_only_fields = ['user', ]
 
     def create(self, validated_data):
         """Метод для создания"""
@@ -40,6 +41,12 @@ class AdvertisementSerializer(serializers.ModelSerializer):
     def validate(self, data):
         """Метод для валидации. Вызывается при создании и обновлении."""
 
-        # TODO: добавьте требуемую валидацию
-
+        status = data.get('status')
+        if status == 'CLOSED':
+            return data
+        post = Advertisement.objects.filter(creator=self.context["request"].user, status='OPEN')
+        post_quantity = post.count()
+        limit_post = 10
+        if post_quantity > limit_post:
+            raise serializers.ValidationError('Exceeded the number of posts')
         return data
