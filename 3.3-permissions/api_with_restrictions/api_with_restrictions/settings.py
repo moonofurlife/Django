@@ -81,8 +81,8 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend'
     ],
     'DEFAULT_THROTTLE_CLASSES': [
-        # 'rest_framework.throttling.UserRateThrottle',
-        # 'rest_framework.throttling.Anon RateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.Anon RateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
         "user": "20/minute",

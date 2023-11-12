@@ -24,7 +24,7 @@ class AdvertisementViewSet(ModelViewSet):
     def get_permissions(self):
         """Получение прав для действий."""
         if self.action in ["create", "update", "partial_update", "partial_update", "destroy"]:
-            return [IsOwnerOrReadOnly()]
+            return [IsAuthenticated(), IsOwnerOrReadOnly()]
         return []
 
     def list(self, request, **kwargs):
